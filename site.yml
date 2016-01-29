@@ -1,0 +1,20 @@
+---
+- name:  apply common configuration to all nodes
+  hosts: all
+  roles:
+    - common
+
+- name:  install the Oracle JDK to all applicable nodes
+  hosts: all
+  roles:
+    - java
+
+- name:  install artifactory to all applicable nodes
+  hosts: all
+  roles:
+    - artifactory
+
+- name:  install jenkins to all applicable nodes
+  hosts: all
+  roles:
+    - jenkins

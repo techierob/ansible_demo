@@ -1,0 +1,12 @@
+---
+- name:           add the artifactory apt key
+  apt_key:        url=https://bintray.com/user/downloadSubjectPublicKey?username=jfrog state=present
+
+- name:           add the artifactory apt repository
+  apt_repository: repo='deb https://jfrog.bintray.com/artifactory-pro-debs trusty main' state=present update_cache=yes
+
+- name:           ensure artifactory is at the latest version
+  apt:            name=jfrog-artifactory-pro state=latest
+
+- name:           restart artifactory
+  service:        name=artifactory state=restarted

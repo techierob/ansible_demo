@@ -1,0 +1,19 @@
+---
+- name:           add the jenkins-ci apt key
+  apt_key:        url=http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key state=present
+
+- name:           add the jenkins apt repository
+  apt_repository: repo='deb http://pkg.jenkins-ci.org/debian binary/' state=present update_cache=yes
+
+- name:           ensure jenkins is at the latest version
+  apt:            name=jenkins state=latest update_cache=yes
+
+- name:           ensure jenkins is running (and enable it at boot)
+  service:        name=jenkins state=started enabled=yes
+
+- name:           configure the http port for jenkins
+  lineinfile:     dest=/etc/default/jenkins regexp=^HTTP_PORT= line=HTTP_PORT=8080
+  notify:         restart jenkins
+
+- name:           restart jenkins
+  service:        name=jenkins state=restarted
